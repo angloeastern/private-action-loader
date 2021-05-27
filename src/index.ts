@@ -3,7 +3,7 @@ import { runAction } from './action';
 
 const token = core.getInput('repo-token', { required: true });
 const repoName = core.getInput('repo-name', { required: true });
-const buildScriptName = core.getInput('build-script-name:', { required: true });
+const buildScriptName = core.getInput('build-script-name', { required: true });
 const workDirectory = './.private-action';
 
 runAction({
