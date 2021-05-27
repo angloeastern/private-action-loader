@@ -35,7 +35,7 @@ export async function runAction(opts: {
   token: string;
   repoName: string;
   workDirectory: string;
-  customCommand?: string;
+  scriptName?: string;
 }): Promise<void> {
   const [repo, sha] = opts.repoName.split('@');
 
@@ -78,8 +78,8 @@ export async function runAction(opts: {
   core.endGroup();
 
   core.info(`Starting private action ${action.name}`);
-  if(opts.customCommand){
-    await exec.exec(opts.customCommand);
+  if(opts.scriptName){
+    await exec.exec(`yarn --cwd ${opts.workDirectory} ${opts.scriptName}`);
   }
   await exec.exec(`node ${join(opts.workDirectory, action.runs.main)}`);
 

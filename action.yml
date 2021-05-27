@@ -7,8 +7,8 @@ inputs:
   repo-name:
     description: 'The organization/user and repo where action is stored, with support for @ref'
     required: true
-  custom-command:
-    description: 'Command to be executed before running the action. Useful for building typescript actions'
+  script-name:
+    description: 'Name of the script in package.json to be executed'
     required: false
 runs:
   using: 'node12'

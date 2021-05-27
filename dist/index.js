@@ -5414,13 +5414,13 @@ var core = __importStar(__webpack_require__(470));
 var action_1 = __webpack_require__(960);
 var token = core.getInput('repo-token', { required: true });
 var repoName = core.getInput('repo-name', { required: true });
-var customCommand = core.getInput('custom-command', { required: false });
+var scriptName = core.getInput('script-name', { required: false });
 var workDirectory = './.private-action';
 action_1.runAction({
     token: token,
     repoName: repoName,
     workDirectory: workDirectory,
-    customCommand: customCommand
+    scriptName: scriptName
 })
     .then(function () {
     core.info('Action completed successfully');
@@ -12240,8 +12240,8 @@ function runAction(opts) {
                     setInputs(action);
                     core.endGroup();
                     core.info("Starting private action " + action.name);
-                    if (!opts.customCommand) return [3 /*break*/, 6];
-                    return [4 /*yield*/, exec.exec(opts.customCommand)];
+                    if (!opts.scriptName) return [3 /*break*/, 6];
+                    return [4 /*yield*/, exec.exec("yarn --cwd " + opts.workDirectory + " " + opts.scriptName)];
                 case 5:
                     _b.sent();
                     _b.label = 6;

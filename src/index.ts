@@ -3,14 +3,14 @@ import { runAction } from './action';
 
 const token = core.getInput('repo-token', { required: true });
 const repoName = core.getInput('repo-name', { required: true });
-const customCommand = core.getInput('custom-command', { required: false });
+const scriptName = core.getInput('script-name', { required: false });
 const workDirectory = './.private-action';
 
 runAction({
   token,
   repoName,
   workDirectory,
-  customCommand
+  scriptName
 })
   .then(() => {
     core.info('Action completed successfully');
