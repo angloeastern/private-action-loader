@@ -19,13 +19,13 @@ jobs:
         with:
           node-version: '10.x'
       - name: install
-        run: npm install
+        run: yarn
       - name: lint
-        run: npm run lint
+        run: yarn lint
       - name: test
-        run: npm run test
+        run: yarn test
       - name: coverage
-        run: npm run coverage:report
+        run: yarn coverage:report
       - name: Release
         if: github.ref == 'refs/heads/master'
         id: semantic
