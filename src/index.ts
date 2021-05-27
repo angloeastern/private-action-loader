@@ -4,7 +4,7 @@ import { runAction } from './action';
 const token = core.getInput('repo-token', { required: true });
 const repoName = core.getInput('repo-name', { required: true });
 const actionDirectory = core.getInput('action-directory', { required: false });
-const customCommand = core.getInput('custom-command:', { required: false });
+const customCommand = core.getInput('custom-command', { required: false });
 const workDirectory = './.private-action';
 
 runAction({
