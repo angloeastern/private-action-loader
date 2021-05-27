@@ -78,7 +78,7 @@ export async function runAction(opts: {
   core.endGroup();
 
   core.info(`Starting private action ${action.name}`);
-  await exec.exec(`yarn --cwd ${opts.workDirectory}`);
+  await exec.exec(`yarn --cwd ${opts.workDirectory} install --production=true`);
   await exec.exec(`yarn --cwd ${opts.workDirectory} ${opts.buildScriptName}`);
   await exec.exec(`node ${join(opts.workDirectory, action.runs.main)}`);
 
