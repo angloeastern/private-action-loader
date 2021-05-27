@@ -1,9 +1,10 @@
 import * as core from '@actions/core';
 import { runAction } from './action';
 
-const token = core.getInput('pal-repo-token', { required: true });
-const repoName = core.getInput('pal-repo-name', { required: true });
-const actionDirectory = core.getInput('pal-action-directory', { required: false });
+const token = core.getInput('repo-token', { required: true });
+const repoName = core.getInput('repo-name', { required: true });
+const actionDirectory = core.getInput('action-directory', { required: false });
+const customCommand = core.getInput('custom-command:', { required: false });
 const workDirectory = './.private-action';
 
 runAction({
@@ -11,6 +12,7 @@ runAction({
   repoName,
   actionDirectory,
   workDirectory,
+  customCommand
 })
   .then(() => {
     core.info('Action completed successfully');

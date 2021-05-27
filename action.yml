@@ -7,8 +7,8 @@ inputs:
   repo-name:
     description: 'The organization/user and repo where action is stored, with support for @ref'
     required: true
-  action-directory:
-    description: 'The optional path to directory containing action.  Useful when multiple private actions are stored in the same repo'
+  custom-command:
+    description: 'Command to be executed before running the action. Useful for building typescript actions'
     required: false
 runs:
   using: 'node12'

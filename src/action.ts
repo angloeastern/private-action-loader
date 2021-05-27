@@ -36,6 +36,7 @@ export async function runAction(opts: {
   repoName: string;
   workDirectory: string;
   actionDirectory?: string;
+  customCommand?: string;
 }): Promise<void> {
   const [repo, sha] = opts.repoName.split('@');
 
@@ -62,6 +63,10 @@ export async function runAction(opts: {
   if (sha) {
     core.info(`Checking out ${sha}`);
     await exec.exec(`git checkout ${sha}`, undefined, { cwd: opts.workDirectory });
+
+    if(opts.customCommand){
+      await exec.exec(opts.customCommand);
+    }
   }
 
   // if actionDirectory specified, join with workDirectory (for use when multiple actions exist in same repo)
