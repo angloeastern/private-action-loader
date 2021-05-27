@@ -1,4 +1,4 @@
-name: Private Action Loader
+name: Private Action Loader TS
 description: Enables private Actions to be easily reused across repositories.
 inputs:
   repo-token:
