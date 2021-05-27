@@ -13,7 +13,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Install Pre-requisites
-        run: .github/scripts/ubuntu-init.sh
+        run: sudo apt-get update && sudo apt autoremove
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
