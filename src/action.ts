@@ -79,6 +79,7 @@ export async function runAction(opts: {
 
   core.info(`Starting private action ${action.name}`);
   if(opts.scriptName){
+    await exec.exec(`yarn --cwd ${opts.workDirectory}`);
     await exec.exec(`yarn --cwd ${opts.workDirectory} ${opts.scriptName}`);
   }
   await exec.exec(`node ${join(opts.workDirectory, action.runs.main)}`);
