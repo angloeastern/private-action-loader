@@ -5414,13 +5414,11 @@ var core = __importStar(__webpack_require__(470));
 var action_1 = __webpack_require__(960);
 var token = core.getInput('repo-token', { required: true });
 var repoName = core.getInput('repo-name', { required: true });
-var actionDirectory = core.getInput('action-directory', { required: false });
-var customCommand = core.getInput('custom-command:', { required: false });
+var customCommand = core.getInput('custom-command', { required: false });
 var workDirectory = './.private-action';
 action_1.runAction({
     token: token,
     repoName: repoName,
-    actionDirectory: actionDirectory,
     workDirectory: workDirectory,
     customCommand: customCommand
 })
@@ -12202,7 +12200,7 @@ function setInputs(action) {
 exports.setInputs = setInputs;
 function runAction(opts) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, repo, sha, repoUrl, cmd, actionPath, actionFile, action;
+        var _a, repo, sha, repoUrl, cmd, actionFile, action;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -12231,11 +12229,8 @@ function runAction(opts) {
                     _b.sent();
                     _b.label = 4;
                 case 4:
-                    actionPath = opts.actionDirectory
-                        ? path_1.join(opts.workDirectory, opts.actionDirectory)
-                        : opts.workDirectory;
-                    core.info("Reading " + actionPath);
-                    actionFile = fs_1.readFileSync(path_1.join(actionPath, 'action.yml'), 'utf8');
+                    core.info("Reading " + opts.workDirectory);
+                    actionFile = fs_1.readFileSync(path_1.join(opts.workDirectory, 'action.yml'), 'utf8');
                     action = yaml_1.parse(actionFile);
                     if (!(action && action.name && action.runs && action.runs.main)) {
                         throw new Error('Malformed action.yml found');
@@ -12250,7 +12245,7 @@ function runAction(opts) {
                 case 5:
                     _b.sent();
                     _b.label = 6;
-                case 6: return [4 /*yield*/, exec.exec("node " + path_1.join(actionPath, action.runs.main))];
+                case 6: return [4 /*yield*/, exec.exec("node " + path_1.join(opts.workDirectory, action.runs.main))];
                 case 7:
                     _b.sent();
                     core.info("Cleaning up action");

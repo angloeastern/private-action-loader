@@ -35,7 +35,6 @@ export async function runAction(opts: {
   token: string;
   repoName: string;
   workDirectory: string;
-  actionDirectory?: string;
   customCommand?: string;
 }): Promise<void> {
   const [repo, sha] = opts.repoName.split('@');
@@ -65,22 +64,15 @@ export async function runAction(opts: {
     await exec.exec(`git checkout ${sha}`, undefined, { cwd: opts.workDirectory });
   }
 
-  // if actionDirectory specified, join with workDirectory (for use when multiple actions exist in same repo)
-  // if actionDirectory not specified, use workDirectory (for repo with a single action at root)
-  const actionPath = opts.actionDirectory
-    ? join(opts.workDirectory, opts.actionDirectory)
-    : opts.workDirectory;
-
-  core.info(`Reading ${actionPath}`);
-  const actionFile = readFileSync(join(actionPath,'action.yml'), 'utf8');
+  core.info(`Reading ${opts.workDirectory}`);
+  const actionFile = readFileSync(join(opts.workDirectory,'action.yml'), 'utf8');
   const action = parse(actionFile);
 
   if (!(action && action.name && action.runs && action.runs.main)) {
     throw new Error('Malformed action.yml found');
   }
-
+  
   core.endGroup();
-
   core.startGroup('Input Validation');
   setInputs(action);
   core.endGroup();
@@ -89,7 +81,7 @@ export async function runAction(opts: {
   if(opts.customCommand){
     await exec.exec(opts.customCommand);
   }
-  await exec.exec(`node ${join(actionPath, action.runs.main)}`);
+  await exec.exec(`node ${join(opts.workDirectory, action.runs.main)}`);
 
   core.info(`Cleaning up action`);
   sync(opts.workDirectory);

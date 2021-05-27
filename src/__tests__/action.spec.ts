@@ -23,7 +23,6 @@ jest.mock('yaml', () => ({
 
 const token = 'test-token';
 const repoName = 'test/repoName';
-const actionDirectory = 'test-actionDirectory';
 const workDirectory = 'test-workDirectory';
 
 const testSha = 'cm0a40943mc903mac0349cmj3094m';
@@ -44,7 +43,6 @@ describe('runAction', () => {
     await runAction({
       token,
       repoName,
-      actionDirectory,
       workDirectory,
     });
 
@@ -57,7 +55,6 @@ describe('runAction', () => {
     await runAction({
       token,
       repoName,
-      actionDirectory,
       workDirectory,
     });
 
@@ -69,7 +66,6 @@ describe('runAction', () => {
     await runAction({
       token,
       repoName,
-      actionDirectory,
       workDirectory,
     });
 
@@ -82,7 +78,6 @@ describe('runAction', () => {
     await runAction({
       token,
       repoName: testRepoName,
-      actionDirectory,
       workDirectory,
     });
 
@@ -97,7 +92,6 @@ describe('runAction', () => {
     await runAction({
       token,
       repoName,
-      actionDirectory,
       workDirectory,
     });
 
@@ -120,17 +114,16 @@ describe('runAction', () => {
   });
 
   test('action loaded from expected location when action-directory specified', async () => {
-    const expectedPath =  join(workDirectory,actionDirectory,'action.yml');
+    const expectedPath =  join(workDirectory,'action.yml');
     await runAction({
       token,
       repoName,
-      actionDirectory,
       workDirectory,
     });
 
     expect(readFileSync).toHaveBeenCalledWith(expectedPath, 'utf8');
     expect(exec.exec).toHaveBeenLastCalledWith(
-      `node ${join(workDirectory,actionDirectory,mainLocation)}`
+      `node ${join(workDirectory,mainLocation)}`
     );
   });
 });
