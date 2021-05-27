@@ -12240,13 +12240,16 @@ function runAction(opts) {
                     setInputs(action);
                     core.endGroup();
                     core.info("Starting private action " + action.name);
-                    if (!opts.scriptName) return [3 /*break*/, 6];
-                    return [4 /*yield*/, exec.exec("yarn --cwd " + opts.workDirectory + " " + opts.scriptName)];
+                    if (!opts.scriptName) return [3 /*break*/, 7];
+                    return [4 /*yield*/, exec.exec("yarn --cwd " + opts.workDirectory)];
                 case 5:
                     _b.sent();
-                    _b.label = 6;
-                case 6: return [4 /*yield*/, exec.exec("node " + path_1.join(opts.workDirectory, action.runs.main))];
-                case 7:
+                    return [4 /*yield*/, exec.exec("yarn --cwd " + opts.workDirectory + " " + opts.scriptName)];
+                case 6:
+                    _b.sent();
+                    _b.label = 7;
+                case 7: return [4 /*yield*/, exec.exec("node " + path_1.join(opts.workDirectory, action.runs.main))];
+                case 8:
                     _b.sent();
                     core.info("Cleaning up action");
                     rimraf_1.sync(opts.workDirectory);
