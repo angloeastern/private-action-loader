@@ -2,6 +2,7 @@ import * as exec from '@actions/exec';
 import * as core from '@actions/core';
 import { readFileSync } from 'fs';
 import { runAction, setInputs } from '../action';
+import { join } from 'path';
 
 const mainLocation = `test-main/index.js`;
 
@@ -107,7 +108,7 @@ describe('runAction', () => {
   });
 
   test('action loaded and executed from expected location when action-directory not specified', async () => {
-    const expectedPath = `${workDirectory}/action.yml`;
+    const expectedPath =  join(workDirectory,'action.yml');
     await runAction({
       token,
       repoName,
@@ -115,11 +116,11 @@ describe('runAction', () => {
     });
 
     expect(readFileSync).toHaveBeenCalledWith(expectedPath, 'utf8');
-    expect(exec.exec).toHaveBeenLastCalledWith(`node ${workDirectory}/${mainLocation}`);
+    expect(exec.exec).toHaveBeenLastCalledWith(`node ${join(workDirectory,mainLocation)}`);
   });
 
   test('action loaded from expected location when action-directory specified', async () => {
-    const expectedPath = `${workDirectory}/${actionDirectory}/action.yml`;
+    const expectedPath =  join(workDirectory,actionDirectory,'action.yml');
     await runAction({
       token,
       repoName,
@@ -129,7 +130,7 @@ describe('runAction', () => {
 
     expect(readFileSync).toHaveBeenCalledWith(expectedPath, 'utf8');
     expect(exec.exec).toHaveBeenLastCalledWith(
-      `node ${workDirectory}/${actionDirectory}/${mainLocation}`
+      `node ${join(workDirectory,actionDirectory,mainLocation)}`
     );
   });
 });
@@ -149,8 +150,8 @@ describe('setInputs', () => {
   });
 
   test('input passed via action handled properly', async () => {
-    const name = 'test_input';
-    const input = 'INPUT_TEST_INPUT';
+    const name = 'testInput';
+    const input = 'INPUT_TESTINPUT';
     process.env[input] = '123';
 
     setInputs({
@@ -159,7 +160,7 @@ describe('setInputs', () => {
         main: 'main',
       },
       inputs: {
-        test_input: {
+        testInput: {
           value: '123',
         },
       },
@@ -169,8 +170,8 @@ describe('setInputs', () => {
   });
 
   test('omitted input that is not required and has no default is handled properly', async () => {
-    const name = 'test_input';
-    const input = 'INPUT_TEST_INPUT';
+    const name = 'testInput';
+    const input = 'INPUT_TESTINPUT';
     delete process.env[input];
 
     setInputs({
@@ -179,7 +180,7 @@ describe('setInputs', () => {
         main: 'main',
       },
       inputs: {
-        test_input: {
+        testInput: {
           value: '123',
         },
       },
@@ -189,8 +190,8 @@ describe('setInputs', () => {
   });
 
   test('omitted input that is required without a default is handled properly', async () => {
-    const name = 'test_input';
-    const input = 'INPUT_TEST_INPUT';
+    const name = 'testInput';
+    const input = 'INPUT_TESTINPUT';
     delete process.env[input];
 
     setInputs({
@@ -199,7 +200,7 @@ describe('setInputs', () => {
         main: 'main',
       },
       inputs: {
-        test_input: {
+        testInput: {
           value: 123,
           required: true,
         },
@@ -212,7 +213,7 @@ describe('setInputs', () => {
   });
 
   test('omitted input that is optional with a default is handled properly', async () => {
-    const input = 'INPUT_TEST_INPUT';
+    const input = 'INPUT_TESTINPUT';
     delete process.env[input];
 
     setInputs({
@@ -221,7 +222,7 @@ describe('setInputs', () => {
         main: 'main',
       },
       inputs: {
-        test_input: {
+        testInput: {
           value: 123,
           default: 'default-value',
           required: false,
@@ -233,7 +234,7 @@ describe('setInputs', () => {
   });
 
   test('omitted input that is required with a default is handled properly', async () => {
-    const input = 'INPUT_TEST_INPUT';
+    const input = 'INPUT_TESTINPUT';
     delete process.env[input];
 
     setInputs({
@@ -242,7 +243,7 @@ describe('setInputs', () => {
         main: 'main',
       },
       inputs: {
-        test_input: {
+        testInput: {
           value: 123,
           default: 'default-value',
           required: true,

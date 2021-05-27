@@ -63,10 +63,6 @@ export async function runAction(opts: {
   if (sha) {
     core.info(`Checking out ${sha}`);
     await exec.exec(`git checkout ${sha}`, undefined, { cwd: opts.workDirectory });
-
-    if(opts.customCommand){
-      await exec.exec(opts.customCommand);
-    }
   }
 
   // if actionDirectory specified, join with workDirectory (for use when multiple actions exist in same repo)
@@ -76,7 +72,7 @@ export async function runAction(opts: {
     : opts.workDirectory;
 
   core.info(`Reading ${actionPath}`);
-  const actionFile = readFileSync(`${actionPath}/action.yml`, 'utf8');
+  const actionFile = readFileSync(join(actionPath,'action.yml'), 'utf8');
   const action = parse(actionFile);
 
   if (!(action && action.name && action.runs && action.runs.main)) {
@@ -90,6 +86,9 @@ export async function runAction(opts: {
   core.endGroup();
 
   core.info(`Starting private action ${action.name}`);
+  if(opts.customCommand){
+    await exec.exec(opts.customCommand);
+  }
   await exec.exec(`node ${join(actionPath, action.runs.main)}`);
 
   core.info(`Cleaning up action`);

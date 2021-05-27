@@ -12224,22 +12224,18 @@ function runAction(opts) {
                         })];
                 case 2:
                     _b.sent();
-                    if (!sha) return [3 /*break*/, 5];
+                    if (!sha) return [3 /*break*/, 4];
                     core.info("Checking out " + sha);
                     return [4 /*yield*/, exec.exec("git checkout " + sha, undefined, { cwd: opts.workDirectory })];
                 case 3:
                     _b.sent();
-                    if (!opts.customCommand) return [3 /*break*/, 5];
-                    return [4 /*yield*/, exec.exec(opts.customCommand)];
+                    _b.label = 4;
                 case 4:
-                    _b.sent();
-                    _b.label = 5;
-                case 5:
                     actionPath = opts.actionDirectory
                         ? path_1.join(opts.workDirectory, opts.actionDirectory)
                         : opts.workDirectory;
                     core.info("Reading " + actionPath);
-                    actionFile = fs_1.readFileSync(actionPath + "/action.yml", 'utf8');
+                    actionFile = fs_1.readFileSync(path_1.join(actionPath, 'action.yml'), 'utf8');
                     action = yaml_1.parse(actionFile);
                     if (!(action && action.name && action.runs && action.runs.main)) {
                         throw new Error('Malformed action.yml found');
@@ -12249,8 +12245,13 @@ function runAction(opts) {
                     setInputs(action);
                     core.endGroup();
                     core.info("Starting private action " + action.name);
-                    return [4 /*yield*/, exec.exec("node " + path_1.join(actionPath, action.runs.main))];
-                case 6:
+                    if (!opts.customCommand) return [3 /*break*/, 6];
+                    return [4 /*yield*/, exec.exec(opts.customCommand)];
+                case 5:
+                    _b.sent();
+                    _b.label = 6;
+                case 6: return [4 /*yield*/, exec.exec("node " + path_1.join(actionPath, action.runs.main))];
+                case 7:
                     _b.sent();
                     core.info("Cleaning up action");
                     rimraf_1.sync(opts.workDirectory);
