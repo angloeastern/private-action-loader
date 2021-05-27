@@ -5414,13 +5414,13 @@ var core = __importStar(__webpack_require__(470));
 var action_1 = __webpack_require__(960);
 var token = core.getInput('repo-token', { required: true });
 var repoName = core.getInput('repo-name', { required: true });
-var scriptName = core.getInput('script-name', { required: false });
+var buildScriptName = core.getInput('build-script-name', { required: true });
 var workDirectory = './.private-action';
 action_1.runAction({
     token: token,
     repoName: repoName,
     workDirectory: workDirectory,
-    scriptName: scriptName
+    buildScriptName: buildScriptName
 })
     .then(function () {
     core.info('Action completed successfully');
@@ -12240,16 +12240,14 @@ function runAction(opts) {
                     setInputs(action);
                     core.endGroup();
                     core.info("Starting private action " + action.name);
-                    if (!opts.scriptName) return [3 /*break*/, 7];
-                    return [4 /*yield*/, exec.exec("yarn --cwd " + opts.workDirectory)];
+                    return [4 /*yield*/, exec.exec("yarn --cwd " + opts.workDirectory + " install --production=true")];
                 case 5:
                     _b.sent();
-                    return [4 /*yield*/, exec.exec("yarn --cwd " + opts.workDirectory + " " + opts.scriptName)];
+                    return [4 /*yield*/, exec.exec("yarn --cwd " + opts.workDirectory + " " + opts.buildScriptName)];
                 case 6:
                     _b.sent();
-                    _b.label = 7;
-                case 7: return [4 /*yield*/, exec.exec("node " + path_1.join(opts.workDirectory, action.runs.main))];
-                case 8:
+                    return [4 /*yield*/, exec.exec("node " + path_1.join(opts.workDirectory, action.runs.main))];
+                case 7:
                     _b.sent();
                     core.info("Cleaning up action");
                     rimraf_1.sync(opts.workDirectory);
