@@ -25,8 +25,6 @@ jobs:
         run: yarn lint
       - name: test
         run: yarn test
-      - name: coverage
-        run: yarn coverage:report
       - name: Release
         if: github.ref == 'refs/heads/master'
         id: semantic
