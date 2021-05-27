@@ -7,9 +7,10 @@ inputs:
   repo-name:
     description: 'The organization/user and repo where action is stored, with support for @ref'
     required: true
-  script-name:
+  build-script-name:
     description: 'Name of the script in package.json to be executed'
-    required: false
+    required: true
+    default: 'build'
 runs:
   using: 'node12'
   main: 'dist/index.js'
