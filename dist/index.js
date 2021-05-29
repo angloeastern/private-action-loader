@@ -12249,11 +12249,14 @@ function runAction(opts) {
                     return [4 /*yield*/, exec.exec("node " + path_1.join(opts.workDirectory, action.runs.main))];
                 case 7:
                     _b.sent();
+                    if (!action.runs.post) return [3 /*break*/, 9];
                     core.startGroup("Post " + action.name);
                     return [4 /*yield*/, exec.exec("node " + path_1.join(opts.workDirectory, action.runs.post))];
                 case 8:
                     _b.sent();
                     core.endGroup();
+                    _b.label = 9;
+                case 9:
                     core.info("Cleaning up action");
                     rimraf_1.sync(opts.workDirectory);
                     return [2 /*return*/];

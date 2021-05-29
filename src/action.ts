@@ -82,9 +82,11 @@ export async function runAction(opts: {
   await exec.exec(`yarn --cwd ${opts.workDirectory} ${opts.buildScriptName}`);
   await exec.exec(`node ${join(opts.workDirectory, action.runs.main)}`);
 
-  core.startGroup(`Post ${action.name}`)
-  await exec.exec(`node ${join(opts.workDirectory, action.runs.post)}`);
-  core.endGroup();
+  if(action.runs.post){
+    core.startGroup(`Post ${action.name}`)
+    await exec.exec(`node ${join(opts.workDirectory, action.runs.post)}`);
+    core.endGroup();
+  }
 
   core.info(`Cleaning up action`);
   sync(opts.workDirectory);
