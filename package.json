@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NazmiAltun/private-action-loader.git"
+    "url": "git+https://github.com/angloeastern/private-action-loader.git"
   },
   "author": {
     "name": "Nick Fields , Nazmi Altun"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/NazmiAltun/private-action-loader/issues"
+    "url": "https://github.com/angloeastern/private-action-loader/issues"
   },
   "dependencies": {
     "@actions/core": "^1.2.6",
