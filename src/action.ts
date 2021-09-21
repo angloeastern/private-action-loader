@@ -88,6 +88,6 @@ export async function runAction(opts: {
     core.endGroup();
   }
 
-  core.info(`Cleaning up action`);
+  core.info('Cleaning up action');
   sync(opts.workDirectory);
 }
