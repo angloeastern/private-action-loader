@@ -90,4 +90,5 @@ export async function runAction(opts: {
 
   core.info('Cleaning up action');
   sync(opts.workDirectory);
+  core.info('Completed...');
 }
