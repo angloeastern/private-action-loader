@@ -36,6 +36,7 @@ export async function runAction(opts: {
   repoName: string;
   workDirectory: string;
   buildScriptName?: string;
+  sonarToken?: string;
 }): Promise<void> {
   const [repo, sha] = opts.repoName.split('@');
 

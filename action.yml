@@ -1,6 +1,9 @@
 name: Private Action Loader TS
 description: Enables private Actions to be easily reused across repositories.
 inputs:
+  sonar-token:
+    description: 'Required for .net solutions, for js/ts solutions use environment'
+    required: false
   repo-token:
     description: 'Access token with read access to the repo containing action'
     required: true

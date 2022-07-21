@@ -12200,7 +12200,7 @@ function setInputs(action) {
 exports.setInputs = setInputs;
 function runAction(opts) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, repo, sha, repoUrl, cmd, actionFile, action;
+        var _a, repo, sha, repoUrl, cmd, actionFile, action, sonarToken;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -12209,6 +12209,7 @@ function runAction(opts) {
                     core.setSecret(opts.token);
                     core.startGroup('Cloning private action');
                     repoUrl = "https://" + opts.token + "@github.com/" + repo + ".git";
+                    sonarToken = opts.sonarToken;
                     cmd = ['git clone', repoUrl, opts.workDirectory].join(' ');
                     core.info("Cleaning workDirectory");
                     rimraf_1.sync(opts.workDirectory);
